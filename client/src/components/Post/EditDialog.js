@@ -54,13 +54,13 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({ id }) {
+export default function CustomizedDialogs({ post }) {
   const [open, setOpen] = useState(false);
   const [editedPost, setEditedPost] = useState({
     creator: "",
-    title: "",
-    tags: [],
-    message: "",
+    title: `${post?.title}`,
+    tags: [...post?.tags],
+    message: `${post?.message}`,
     selectedFile: "",
   });
 
@@ -88,14 +88,6 @@ export default function CustomizedDialogs({ id }) {
     });
 
     dispatch(updatePost(e.target.id, cleanPost));
-
-    setEditedPost({
-      creator: "",
-      title: "",
-      tags: [],
-      message: "",
-      selectedFile: "",
-    });
   };
 
   return (
@@ -119,7 +111,7 @@ export default function CustomizedDialogs({ id }) {
           Edit your Post
         </BootstrapDialogTitle>
         <form
-          id={id}
+          id={post?._id}
           onSubmit={(e) => {
             handlerSubmit(e);
           }}
@@ -131,6 +123,7 @@ export default function CustomizedDialogs({ id }) {
                 <FilledInput
                   className="w-100"
                   id="component-filled"
+                  value={editedPost.title}
                   onChange={(e) =>
                     setEditedPost({ ...editedPost, title: e.target.value })
                   }
@@ -141,6 +134,7 @@ export default function CustomizedDialogs({ id }) {
                 <FilledInput
                   className="w-100"
                   id="component-filled"
+                  value={editedPost.message}
                   onChange={(e) =>
                     setEditedPost({ ...editedPost, message: e.target.value })
                   }
@@ -151,6 +145,7 @@ export default function CustomizedDialogs({ id }) {
                 <FilledInput
                   className="w-100"
                   id="component-filled"
+                  value={editedPost.tags.join(" ")}
                   onChange={(e) =>
                     setEditedPost({
                       ...editedPost,

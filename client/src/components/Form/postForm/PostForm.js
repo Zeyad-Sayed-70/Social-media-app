@@ -12,6 +12,7 @@ const PostForm = ({ handlerSubmit, newPost, setNewPost, clearForm }) => {
           <TextField
             label="title"
             className="w-100 my-2 bg-light"
+            value={newPost.title}
             onChange={(e) => {
               setNewPost({ ...newPost, title: e.target.value });
             }}
@@ -22,6 +23,7 @@ const PostForm = ({ handlerSubmit, newPost, setNewPost, clearForm }) => {
             multiline
             rows={6}
             className="h-100 my-2 bg-light"
+            value={newPost.message}
             style={{ width: "100%", height: "150px" }}
             onChange={(e) => {
               setNewPost({ ...newPost, message: e.target.value });
@@ -30,6 +32,7 @@ const PostForm = ({ handlerSubmit, newPost, setNewPost, clearForm }) => {
           <TextField
             label="tags"
             className="w-100 my-2 bg-light"
+            value={newPost.tags.join(" ")}
             onChange={(e) => {
               setNewPost({ ...newPost, tags: e.target.value.split(" ") });
             }}

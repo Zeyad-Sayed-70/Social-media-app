@@ -127,7 +127,14 @@ const Auth = ({ type }) => {
                   label="First Name"
                   className="w-100 my-2"
                 />
-                <p>{errors.firstName?.message}</p>
+                <p>
+                  {errors.firstName?.type === "required"
+                    ? "first name is required field"
+                    : ""}
+                  {errors.firstName?.type === "max"
+                    ? "first name should be smaller than 9 letters"
+                    : ""}
+                </p>
               </Col>
               <Col className="col-6">
                 <TextField
@@ -135,7 +142,14 @@ const Auth = ({ type }) => {
                   label="Last Name"
                   className="w-100 my-2"
                 />
-                <p>{errors.lastName?.message}</p>
+                <p>
+                  {errors.lastName?.type === "required"
+                    ? "last name is required field"
+                    : ""}
+                  {errors.lastName?.type === "max"
+                    ? "last name should be smaller than 9 letters"
+                    : ""}
+                </p>
               </Col>
             </Row>
           )}

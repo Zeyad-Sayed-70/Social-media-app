@@ -16,6 +16,9 @@ const PostDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState(
+    JSON.parse(localStorage.getItem("profile"))
+  );
 
   useEffect(() => {
     dispatch(getPost(id));
@@ -85,7 +88,7 @@ const PostDetails = () => {
                   You might also like:
                 </h5>
                 {recommendation.map((reco) => (
-                  <Post post={reco} />
+                  <Post key={reco.title} post={reco} profile={profile} />
                 ))}
               </Col>
             </>

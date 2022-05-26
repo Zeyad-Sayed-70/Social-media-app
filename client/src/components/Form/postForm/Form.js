@@ -24,7 +24,14 @@ const Form = () => {
     dispatch(createPost(newPost));
   };
 
-  const clearForm = () => {};
+  const clearForm = () => {
+    setNewPost({
+      ...newPost,
+      title: "",
+      tags: [],
+      message: "",
+    });
+  };
 
   return (
     <>

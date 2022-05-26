@@ -90,51 +90,56 @@ const Post = ({ post, profile }) => {
               <div className="head-1">
                 <span className="creator fs-5">{post?.creator}</span>
                 {/* More Menu */}
-
-                <div>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    <MoreIcon />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={() => handlerEdit()}>
-                      <CustomizedDialogs id={post._id} />
-                    </MenuItem>
-                    <MenuItem>
-                      <Button
-                        id={post?._id}
-                        variant="outlined"
-                        color="error"
-                        fullWidth
-                        onClick={(e) => delPost(e)}
+                <div style={{ height: "48px" }}>
+                  {post?.creator ===
+                    `${profile?.firstName} ${profile?.lastName}` && (
+                    <>
+                      <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
                       >
-                        <DeleteIcon className="me-1" />
-                        Delete
-                      </Button>
-                    </MenuItem>
-                  </Menu>
+                        <MoreIcon />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={() => handlerEdit()}>
+                          <CustomizedDialogs post={post} />
+                        </MenuItem>
+                        <MenuItem>
+                          <Button
+                            id={post?._id}
+                            variant="outlined"
+                            color="error"
+                            fullWidth
+                            onClick={(e) => delPost(e)}
+                          >
+                            <DeleteIcon className="me-1" />
+                            Delete
+                          </Button>
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  )}
                 </div>
               </div>
+
               {/* moment */}
               <span className="moment">{moment(post?.createAt).fromNow()}</span>
             </div>
@@ -167,13 +172,19 @@ const Post = ({ post, profile }) => {
           </div>
           {/* tags */}
           <div className="tags my-1 mx-2 text-secondary">
-            {post?.tags.map((tag) => (
-              <Chip
-                key={tag}
-                label={tag}
-                className="mx-1 mb-2 text-dark text-uppercase"
-              />
-            ))}
+            {post?.tags.map((tag) => {
+              if (tag !== "") {
+                return (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    className="mx-1 mb-2 text-dark text-uppercase"
+                  />
+                );
+              } else {
+                post.tags.splice(post.tags.indexOf(tag), 1);
+              }
+            })}
           </div>
           {/* buttons like */}
           <div className="option mx-1">
